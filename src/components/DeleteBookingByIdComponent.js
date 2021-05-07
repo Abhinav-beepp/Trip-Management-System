@@ -7,7 +7,7 @@ class DeleteBookingByIdComponent extends React.Component {
   componentDidMount() {
     const { bookingActions, match } = this.props;
     // calling redux function to fetch a particular id
-    bookingActions.fetchDeleteAsset(match.params.id);
+    bookingActions.fetchDeleteBooking(match.params.id);
   }
   render() {
     const { booking } = this.props;

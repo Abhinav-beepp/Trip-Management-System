@@ -12,7 +12,7 @@ class GetBookingByIdComponent extends React.Component {
     componentDidMount() {
         const { bookingActions, match } = this.props;
         console.log(match.params.id)
-        bookingActions.fetchUserById(match.params.id);
+        bookingActions.fetchBookingById(match.params.id);
     }
     render() {
         const { booking } = this.props;
@@ -77,7 +77,7 @@ class GetBookingByIdComponent extends React.Component {
                     <footer className="footer">
                         <div>
 
-                            <span>&copy; Trip Management system by Capgemini 2020 </span>
+                            <span>&copy; Trip Management System by Capgemini 2020 </span>
                         </div>
                         <div className="ml-auto">
                             <a href="https://github.com/Abhinav-beepp/Online-Trip-Management-System " target="_blank" ><span>GITHUB</span>

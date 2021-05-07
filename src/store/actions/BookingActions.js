@@ -4,7 +4,7 @@ import Axios from 'axios';
 const apiUrl = 'http://localhost:9191';
  
 // Sync Action
-export const fetchAllUsersSuccess = (bookings) => {
+export const fetchAllBookingsSuccess = (bookings) => {
     console.log(bookings);
     return {
         type: 'FETCH_ALL_USERS_SUCCESS',
@@ -13,7 +13,7 @@ export const fetchAllUsersSuccess = (bookings) => {
 };
  
 //Async Action
-export const fetchAllUsers = () => {
+export const fetchAllBookings = () => {
     // Returns a dispatcher function
     // that dispatches an action at a later time
     return (dispatch) => {
@@ -22,7 +22,7 @@ export const fetchAllUsers = () => {
             .then(resp => {
                 // Dispatch another action
                 // to consume data              
-                dispatch(fetchAllUsersSuccess(resp.data))
+                dispatch(fetchAllBookingsSuccess(resp.data))
             })
             .catch(error => {
                 throw (error);
@@ -30,7 +30,7 @@ export const fetchAllUsers = () => {
     };
 };
 
-export const fetchUserByIdSuccess = (booking) => {
+export const fetchBookingByIdSuccess = (booking) => {
     console.log(booking);
     return {
         type: 'FETCH_USER_BY_ID_SUCCESS',
@@ -39,7 +39,7 @@ export const fetchUserByIdSuccess = (booking) => {
 };
  
 
-export const fetchUserById = (bookingId) => {
+export const fetchBookingById = (bookingId) => {
     console.log("hi");
     return (dispatch) => {
         return Axios.get(apiUrl + '/api/tms/booking/view-booking/' + bookingId)
@@ -47,7 +47,7 @@ export const fetchUserById = (bookingId) => {
             .then(resp => {
                 console.log(resp.data)
                 // Handle data with sync action
-                dispatch(fetchUserByIdSuccess(resp.data));
+                dispatch(fetchBookingByIdSuccess(resp.data));
             })
             .catch(error => {
                 throw (error);
@@ -55,47 +55,88 @@ export const fetchUserById = (bookingId) => {
     };
 };
  
-export const createUserSuccess = (booking) => {
+export const createBookingSuccess = (booking) => {
     return {
         type: 'CREATE_USER_SUCCESS',
         payload: booking
     }
 };
  
-export const createUser = (payload) => {
+export const createBooking = (payload) => {
     let data = {
-        userId: payload.userId,
-        userType: payload.userType,
-        password: payload.password,
-        email: payload.email,
-        mobile: payload.mobile
+        bookingId: this.state.bookingId,
+        description: this.state.description,
+        bookingType: this.state.bookingType,
+        bookingTitle: this.state.bookingTitle,
+        bookingDate: this.state.bookingDate,
+        getUserIds: 'Select UserIds ',
+        user: {
+            userId: this.state.userId,
+            userType: this.state.userType,
+            password: this.state.password,
+        },
+        package: {
+            packageId: this.state.packageId,
+            packageName: this.state.packageName,
+            packageDescription: this.state.packageDescription,
+            packageType: this.state.packageType,
+            packageCost: this.state.packageCost,
+        },
+        PaymentDetails: {
+            paymentId: this.state.paymentId,
+            paymentMode: this.state.paymentMode,
+            bankName: this.state.bankName,
+            cardNo: this.state.cardNo,
+            netAmount: this.state.netAmount,
+            paymentStatus: this.state.paymentStatus,
+        },
+        user: {
+            userId: this.state.userId,
+            userType: this.state.userType,
+            password: this.state.password,
+        },
+        ticket: {
+            ticketId: this.state.ticketId,
+            status: this.state.status,
+        },
+        hotel: {
+            hotelId: this.state.hotelType,
+            hotelName: this.state.hotelName,
+            hotelType: this.state.hotelType,
+            hotelDescription: this.state.hotelDescription,
+            address: this.state.address,
+            rent: this.state.rent,
+            status: this.state.status,
+        },
+
+    
         
     
     }
     return (dispatch) => {
-        return Axios.post(apiUrl + "/api/tms/admin/add-admin", data)
+        return Axios.post(apiUrl + "/api/tms/booking/makeBooking", data)
             .then(response => {
-                dispatch(createUserSuccess(response.data))
+                dispatch(createBookingSuccess(response.data))
             })
             .catch(error => {
                 throw (error);
             });
     };
 };
-export const fetchDeleteAssetSuccess = (admin) => {
+export const fetchDeleteBookingSuccess = (booking) => {
     return {
       type: 'FETCH_DELETE_ASSET_SUCCESS',
-      payload: admin,
+      payload: booking,
     };
   };
   
-  export const fetchDeleteAsset = (adminId) => {
+  export const fetchDeleteBooking = (bookingId) => {
       console.log("hi");
     return (dispatch) => {
-      return Axios.delete(apiUrl + '/api/tms/admin/delete-admin/' + adminId)
+      return Axios.delete(apiUrl + '/api/tms/admin/delete-admin/' + bookingId)
         .then((resp) => {
           // Handle data with sync action
-          dispatch(fetchDeleteAssetSuccess(resp.data));
+          dispatch(fetchDeleteBookingSuccess(resp.data));
         })
         .catch((error) => {
           throw error;

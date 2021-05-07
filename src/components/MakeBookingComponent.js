@@ -20,25 +20,58 @@ class MakeBookingComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            adminId: '',
-            adminName: '',
-            password: '',
-            email: ''    ,
-            mobile:''    ,
+            bookingId: '',
+            description: '',
+            bookingType: '',
+            bookingTitle: ''    ,
+            bookingDate:''    ,
             getUserIds:'Select UserIds ',
             user: {
                 userId: '',
                 userType: '',
-                password: ''
-            }
+                password: '',
+            },
+            package:{
+                packageId:'',
+                packageName:'',
+                packageDescription:'',
+                packageType:'',
+                packageCost:'',
+                },
+            PaymentDetails:{
+                paymentId:'',
+                paymentMode:'',
+                bankName:'',
+                cardNo:'',
+                netAmount:'',
+                paymentStatus:'',
+               },
+            user:{
+                 userId: '',
+                 userType: '',
+                 password: '',
+             },  
+            ticket:{
+                 ticketId:'',
+                 status:'',
+              },
+            hotel:{
+                hotelId:'',
+                hotelName:'',
+                hotelType:'',
+                hotelDescription:'',
+                address:'',
+                rent:'',
+                status:'',
+            },
         }
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.createUser = this.createUser.bind(this);
+        this.createBooking = this.createBooking.bind(this);
     }
     componentDidMount() {
-        this.props.bookingActions.fetchAllUsers();
+        this.props.bookingActions.fetchAllBookings();
         
-            this.props.bookingActions.fetchAllUsersIds();
+        this.props.bookingActions.fetchAllUsersIds();
         
     }
  
@@ -48,41 +81,111 @@ class MakeBookingComponent extends Component {
         });
     }
  
-    createUser(e) {
+    createBooking(e) {
         e.preventDefault();
         
         let payload = {
-            adminId: this.state.adminId,
-            adminName: this.state.adminName,
-            password: this.state.password,
-            email: this.state.email,
-            mobile: this.state.mobile,
-            
+
+            bookingId: this.state.bookingId,
+            description: this.state.description,
+            bookingType: this.state.bookingType,
+            bookingTitle: this.state.bookingTitle,
+            bookingDate: this.state.bookingDate,
+            getUserIds: 'Select UserIds ',
             user: {
-                userId: this.state.getUserIds,
+                userId: this.state.userId,
                 userType: this.state.userType,
-                password: this.state.password
-            }
+                password: this.state.password,
+            },
+            package: {
+                packageId: this.state.packageId,
+                packageName: this.state.packageName,
+                packageDescription: this.state.packageDescription,
+                packageType: this.state.packageType,
+                packageCost: this.state.packageCost,
+            },
+            PaymentDetails: {
+                paymentId: this.state.paymentId,
+                paymentMode: this.state.paymentMode,
+                bankName: this.state.bankName,
+                cardNo: this.state.cardNo,
+                netAmount: this.state.netAmount,
+                paymentStatus: this.state.paymentStatus,
+            },
+            user: {
+                userId: this.state.userId,
+                userType: this.state.userType,
+                password: this.state.password,
+            },
+            ticket: {
+                ticketId: this.state.ticketId,
+                status: this.state.status,
+            },
+            hotel: {
+                hotelId: this.state.hotelType,
+                hotelName: this.state.hotelName,
+                hotelType: this.state.hotelType,
+                hotelDescription: this.state.hotelDescription,
+                address: this.state.address,
+                rent: this.state.rent,
+                status: this.state.status,
+            },
+           
         }
         
         const { bookingActions } = this.props;
-        bookingActions.createUser(payload);        
+        bookingActions.createBooking(payload);        
  
     }
  
     clear = () => {
         this.setSate = ({
-            adminId: '',
-            adminName: '',
-            password: '',
-            email: ''    ,
-            mobile:''    ,
+            bookingId: '',
+            description: '',
+            bookingType: '',
+            bookingTitle: '',
+            bookingDate: '',
+            getUserIds: 'Select UserIds ',
             user: {
                 userId: '',
                 userType: '',
-                password: ''
-            }
-        });
+                password: '',
+            },
+            package: {
+                packageId: '',
+                packageName: '',
+                packageDescription: '',
+                packageType: '',
+                packageCost: '',
+            },
+            PaymentDetails: {
+                paymentId: '',
+                paymentMode: '',
+                bankName: '',
+                cardNo: '',
+                netAmount: '',
+                paymentStatus: '',
+            },
+            user: {
+                userId: '',
+                userType: '',
+                password: '',
+            },
+            ticket: {
+                ticketId: '',
+                status: '',
+            },
+            hotel: {
+                hotelId: '',
+                hotelName: '',
+                hotelType: '',
+                hotelDescription: '',
+                address: '',
+                rent: '',
+                status: '',
+            },
+        }
+        );
     }
 
     render() {
@@ -99,7 +202,7 @@ class MakeBookingComponent extends Component {
                 </Navbar>
 
                 <Card      border="primary" className ="container mx-auto my-5  col-8 ">
-                    <Form onSubmit={this.createUser}>
+                    <Form onSubmit={this.createBooking}>
                         <Table responsive className= "mx-auto">
                             <tbody>
                                 {/* <tr>
@@ -107,24 +210,24 @@ class MakeBookingComponent extends Component {
                                     <td><input type="text" placeholder="User Id" name="UserId" id="UserId" value={this.state.UserId} onChange={this.handleInputChange}></input></td>
                                 </tr> */}
                                 <tr>
-                                    <td><label>ID:</label></td>
-                                    <td><input type="text" placeholder="Id" name="userId" id="userId" value={this.state.userId} onChange={this.handleInputChange}></input></td>
+                                    <td><label>Booking ID:</label></td>
+                                    <td><input type="text" placeholder="Id" name="bookingId" id="bookingId" value={this.state.bookingId} onChange={this.handleInputChange}></input></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Name:</label></td>
-                                    <td><input type="text" placeholder="Admin Name" name="adminName" id="adminName" value={this.state.adminName} onChange={this.handleInputChange}></input></td>
+                                    <td><label>Description:</label></td>
+                                    <td><input type="text" placeholder="Booking Description" name="Description" id="description" value={this.state.description} onChange={this.handleInputChange}></input></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Password:</label></td>
-                                    <td><input type="password" placeholder="password" name="password" id="password" value={this.state.password} onChange={this.handleInputChange}></input></td>
+                                    <td><label>Booking Type:</label></td>
+                                    <td><input type="text" placeholder="Booking Type" name="Booking Type" id="type" value={this.state.bookingType} onChange={this.handleInputChange}></input></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Email:</label></td>
-                                    <td><input type="text" placeholder="Email" name="UserEmail" id="UserEmail" value={this.state.UserEmail} onChange={this.handleInputChange}></input></td>
+                                    <td><label>Booking Title</label></td>
+                                    <td><input type="text" placeholder="Booking Title" name="Booking Title" id="title" value={this.state.bookingTitle} onChange={this.handleInputChange}></input></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Mobile:</label></td>
-                                    <td><input type="text" placeholder="Mobile" name="UserMobile" id="UserMobile" value={this.state.UserMobile} onChange={this.handleInputChange}></input></td>
+                                    <td><label>Booking Date:</label></td>
+                                    <td><input type="date" placeholder="Booking Date" name="Booking Date" id="date" value={this.state.bookingDate} onChange={this.handleInputChange}></input></td>
                                 </tr>
                                 <td><label>Select User Id:</label></td>
                                 <DropdownButton size="md" className="mx-4 my-2" title="Select User Ids" name="getUserIds" value={this.state.getUserIds} onChange={this.handleInputChange}>
@@ -142,6 +245,7 @@ class MakeBookingComponent extends Component {
 
 
                                 </DropdownButton>
+                                
 
                             </tbody>
                         </Table>
